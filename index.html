@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Историческая карта · версия 1.1</title>
+<link rel="stylesheet" href="leaflet/leaflet.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <div id="karta-blok">
+    <div id="karta"></div>
+
+    <div class="shapka">
+      <h1>Историческая карта</h1>
+      <div class="shapka-pod">1 — 2022 год · версия 1.1</div>
+    </div>
+
+    <div class="legenda">
+      <div><span class="kv kv-nasha"></span> наша страна</div>
+      <div><span class="kv kv-rus"></span> другие русские княжества</div>
+    </div>
+
+    <div id="zagruzka" hidden>загружаю карту…</div>
+
+    <div id="lenta">
+      <button id="play" title="Проиграть (пробел)">▶</button>
+      <button id="minus" title="На год раньше (стрелка влево)">‹</button>
+      <div class="polzunok-blok">
+        <input type="range" id="polzunok" min="1" max="2022" value="1700" aria-label="Год">
+        <div id="metki"></div>
+      </div>
+      <button id="plus" title="На год позже (стрелка вправо)">›</button>
+      <label class="vvod">год <input type="number" id="vvod-goda" min="1" max="2022" value="1700"></label>
+    </div>
+  </div>
+
+  <aside id="stolbec">
+    <div class="god-shapka">
+      <div class="god-bolshoy"><span id="god">1700</span><small>год</small></div>
+      <div class="karta-god">границы на карте — примерно <b id="karta-god"></b></div>
+    </div>
+
+    <section id="klik-info" hidden></section>
+
+    <section id="nasha-blok"></section>
+
+    <section>
+      <h2>События</h2>
+      <div id="sobytiya"></div>
+    </section>
+
+    <section>
+      <h2>Кто правил в других странах</h2>
+      <div id="praviteli"></div>
+    </section>
+
+    <button id="o-proekte" class="knopka-tekst">О проекте: названия, ошибки, источники</button>
+  </aside>
+</div>
+
+<div id="okno" hidden>
+  <div class="okno-vnutri">
+    <button id="zakryt" class="zakryt" title="Закрыть">×</button>
+
+    <h2>Как называлась наша страна</h2>
+    <table class="tablica">
+      <tr><th>Годы</th><th>Название</th><th>Столица</th></tr>
+      <tr><td>862–1132</td><td>Русь (Древнерусское государство)</td><td>Новгород, с 882 г. Киев</td></tr>
+      <tr><td>1132 – XV в.</td><td>много отдельных княжеств (Владимиро-Суздальское, Новгородское, Московское и др.)</td><td>у каждого своя</td></tr>
+      <tr><td>XIV–XV вв.</td><td>Великое княжество Московское</td><td>Москва</td></tr>
+      <tr><td>1547–1721</td><td>Русское царство</td><td>Москва</td></tr>
+      <tr><td>1721–1917</td><td>Российская империя</td><td>Санкт-Петербург</td></tr>
+      <tr><td>1917</td><td>Российская республика</td><td>Петроград</td></tr>
+      <tr><td>1917–1922</td><td>РСФСР (Советская Россия)</td><td>Москва (с 1918 г.)</td></tr>
+      <tr><td>1922–1991</td><td>СССР</td><td>Москва</td></tr>
+      <tr><td>с 1991</td><td>Российская Федерация</td><td>Москва</td></tr>
+    </table>
+
+    <h2>Как пользоваться</h2>
+    <ul>
+      <li>Двигай ползунок внизу — меняется год, карта и список правителей справа.</li>
+      <li>Кнопка ▶ сама листает годы. Стрелки на клавиатуре — на год вперёд или назад, с Shift — на 10 лет.</li>
+      <li>Нажми на страну на карте, чтобы узнать её название и правителя.</li>
+      <li>Чёрточки под ползунком — годы, для которых есть карты границ. Между ними карта показывает ближайшую.</li>
+    </ul>
+
+    <h2>Ошибки и ограничения</h2>
+    <p>Карты границ я взял готовые. Их всего 38 штук (для 1 года, 100, 200 … 2010), поэтому на каждый год
+      показывается ближайшая карта. А правители и события записаны точно по годам.</p>
+    <p>Когда проверял карты, нашёл ошибки:</p>
+    <ul>
+      <li>На карте 1920 года уже написано «СССР», хотя СССР образовали в 1922 году.</li>
+      <li>На карте 1930 года весь СССР был подписан как «White Russia» (Белоруссия). Я это исправил.</li>
+      <li>На картах 1279 и 1300 годов на месте Владимира стоит Рязанское княжество, а на карте 1400 года Москва попадает в Орду.</li>
+      <li>На карте 1200 года уже есть Монгольская империя, хотя Чингисхана провозгласили в 1206 году.</li>
+      <li>На карте 1914 года Китай всё ещё империя Цин, хотя она закончилась в 1912 году.</li>
+      <li>Самая новая карта — 2010 года. Изменения границ после 2010 года на ней не показаны.</li>
+      <li>Границы древних государств примерные, точно их никто не знает.</li>
+    </ul>
+
+    <h2>Источники</h2>
+    <ul>
+      <li>Границы государств: проект historical-basemaps (A. Ourednik),
+        <a href="https://github.com/aourednik/historical-basemaps">github.com/aourednik/historical-basemaps</a>, лицензия GPL-3.0.
+        Я уменьшил файлы, чтобы сайт быстрее работал.</li>
+      <li>Карта сделана на библиотеке Leaflet, <a href="https://leafletjs.com">leafletjs.com</a>.</li>
+      <li>Правители, даты и события: учебники истории России и всеобщей истории, Википедия.</li>
+    </ul>
+
+    <p class="podpis">Проект по истории. Выполнил ученик 8 класса ____________________, 2026 г.</p>
+  </div>
+</div>
+
+<script src="leaflet/leaflet.js"></script>
+<script>var karty = {};</script>
+<script src="perevod.js"></script>
+<script src="dannye.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
